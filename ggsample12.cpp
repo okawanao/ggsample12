@@ -79,7 +79,7 @@ int GgApp::main(int argc, const char* const* argv)
   const auto mm{ ggTranslate(0.0f, 0.7f, 0.0f) };
 
   // 図形の鏡像変換行列を mr に求める
-  const auto mr{ ggScale(1.0f, -1.0f, 1.0f) };
+  const auto mr{ ggTranslate(0.0f, -1.4f, 0.0f) * ggScale(1.0f, -1.0f, 1.0f) };
 
   // 光源の材質
   const GgSimpleShader::LightBuffer lightBuffer{ light };
@@ -100,7 +100,7 @@ int GgApp::main(int argc, const char* const* argv)
     const auto mp{ ggPerspective(0.5f, window.getAspect(), 1.0f, 15.0f) };
 
     // 鏡像用のシェーダの選択
-    mirror.use(mp, mv * mm * window.getRotationMatrix(), lightBuffer);
+    mirror.use(mp, mv * mm * mr * window.getRotationMatrix(), lightBuffer);
     lightBuffer.loadPosition(reflected.data());
 
     // 鏡像の描画
